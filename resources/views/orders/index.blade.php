@@ -19,7 +19,7 @@
             <div class="p-4 border-b border-gray-100 flex justify-between items-center">
                 <div>
                     <p class="text-sm text-gray-500">Order #{{ $order->id }}</p>
-                    <p class="text-sm text-gray-400">{{ $order->created_at->format('d M Y H:i') }}</p>
+                    <p class="text-sm text-gray-400">{{ $order->created_at->diffForHumans() }} ({{ $order->created_at->format('d M Y H:i') }})</p>
                 </div>
                 <span class="px-3 py-1 rounded-full text-sm font-semibold
                     @if($order->status == 'completed') bg-green-100 text-green-700

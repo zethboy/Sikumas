@@ -84,4 +84,50 @@
         </div>
     </div>
 </div>
+    <!-- ===== REVIEWS SECTION ===== -->
+    <div class="mt-12 max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">⭐ Ulasan Pembeli ({{ $product->reviews->count() }})</h2>
+
+        @if($product->reviews->count() > 0)
+            <div class="flex items-center gap-4 mb-6 bg-green-50 rounded-lg p-4">
+                <div class="text-4xl font-bold text-green-700">{{ number_format($product->reviews->avg('rating'), 1) }}</div>
+                <div>
+                    <div class="text-yellow-400 text-lg">
+                        @php $avg = round($product->reviews->avg('rating')); @endphp
+                        @for($i=1; $i<=5; $i++)
+                            @if($i <= $avg) ★ @else ☆ @endif
+                        @endfor
+                    </div>
+                    <p class="text-sm text-gray-500">Dari {{ $product->reviews->count() }} ulasan</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                @foreach($product->reviews as $review)
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold text-sm">
+                                {{ strtoupper(substr($review->user->name, 0, 1)) }}
+                            </div>
+                            <span class="font-semibold text-gray-800 text-sm">{{ $review->user->name }}</span>
+                        </div>
+                        <span class="text-yellow-400 text-sm">
+                            @for($i=1; $i<=5; $i++)
+                                @if($i <= $review->rating) ★ @else ☆ @endif
+                            @endfor
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">{{ $review->comment }}</p>
+                    <p class="text-xs text-gray-400 mt-2">{{ $review->created_at->diffForHumans() }}</p>
+                </div>
+                @endforeach
+            </div>
+        @else
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center text-gray-500">
+                <p>Belum ada ulasan untuk produk ini.</p>
+                <p class="text-sm mt-1">Jadilah pembeli pertama yang memberikan review!</p>
+            </div>
+        @endif
+    </div>
 @endsection

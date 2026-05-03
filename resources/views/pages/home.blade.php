@@ -72,6 +72,13 @@
                         {{ $product->user->name }}
                     </span>
                 </div>
+                    <!-- Tambah rating -->
+                    @if($product->reviews->count() > 0)
+                    <div class="flex items-center gap-1 mt-1 mb-1">
+                        <span class="text-yellow-400 text-xs">★ {{ number_format($product->reviews->avg('rating'), 1) }}</span>
+                        <span class="text-xs text-gray-400">({{ $product->reviews->count() }})</span>
+                    </div>
+                    @endif
                 <h3 class="font-bold text-gray-800">{{ $product->name }}</h3>
                 <p class="text-green-700 font-bold mt-1">Rp {{ number_format($product->price) }}</p>
                 <a href="{{ route('products.show', $product) }}" class="block mt-3 text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">Detail</a>
